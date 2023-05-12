@@ -19,6 +19,17 @@ export default async function productList(selector, category) {
     const el = document.querySelector(selector);
     // get the list of products
     const products = await getData(category);
+
+    // remove some items
+    let product1Index = products.findIndex(obj => obj.Id === "989CG");
+    if (product1Index !== -1) {
+        products.splice(product1Index, 1);
+    }
+    let product2Index = products.findIndex(obj => obj.Id === "880RT");
+    if (product2Index !== -1) {
+        products.splice(product2Index, 1);
+    }
+
     // render out the product list to the element
     renderListWithTemplate(productCardTemplate, el, products);
 }
