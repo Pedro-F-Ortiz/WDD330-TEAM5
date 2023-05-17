@@ -2,18 +2,26 @@ import { getLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
-  if (cartItems) {
+  if (cartItems && cartItems.length > 0) {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
     var cartTotalContainer = document.querySelector(".cart-footer");
     cartTotalContainer.classList.remove("hide");
+
     var cartTotalPrice = cartItems.reduce(function (accumulator, currentItem) {
       return accumulator + currentItem.FinalPrice;
     }, 0);
+
     var cartTotal = document.querySelector(".cart-total");
-    cartTotal.textContent += cartTotalPrice;
+    cartTotal.textContent = "Total: " + cartTotalPrice;
+  } else {
+    document.querySelector(".product-list").innerHTML = "<p>Your cart is empty.</p>";
+    cartTotalContainer = document.querySelector(".cart-footer");
+    cartTotalContainer.classList.add("hide");
   }
 }
+
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
