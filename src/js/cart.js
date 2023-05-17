@@ -16,12 +16,12 @@ function renderCartContents() {
     var cartTotal = document.querySelector(".cart-total");
     cartTotal.textContent = "Total: " + cartTotalPrice;
   } else {
-    document.querySelector(".product-list").innerHTML = "<p>Your cart is empty.</p>";
+    document.querySelector(".product-list").innerHTML =
+      "<p>Your cart is empty.</p>";
     cartTotalContainer = document.querySelector(".cart-footer");
     cartTotalContainer.classList.add("hide");
   }
 }
-
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
