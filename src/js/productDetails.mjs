@@ -21,10 +21,26 @@ export default async function productDetails(productId) {
 
 
 function addToCart() {
-    const cart = getLocalStorage("so-cart") || [];
-    const updatedCart = [...cart, product];
-    setLocalStorage("so-cart", updatedCart);
+    const loadingOverlay = document.querySelector(".loading-overlay");
+    const loadingText = loadingOverlay.querySelector('.loading-text');
+    loadingOverlay.style.display = 'flex';
+
+
+    setTimeout(() => {
+        const cart = getLocalStorage("so-cart") || [];
+        const updatedCart = [...cart, product];
+        setLocalStorage("so-cart", updatedCart);
+        loadingText.textContent = 'Added to Cart';
+        const backpackIcon = document.querySelector('.cart');
+        backpackIcon.style.animation = 'backpackAnimation 0.5s';
+        setTimeout(() => {
+            backpackIcon.style.animation = '';
+            loadingOverlay.style.display = 'none';
+        }, 500);
+    }, 1000);
 }
+
+
 
 function renderProductDetails() {
     document.querySelector("#productName").innerText = product.Brand.Name;
