@@ -16,7 +16,7 @@ export default function renderCartContents() {
     }, 0);
 
     var cartTotal = document.querySelector(".cart-total");
-    cartTotal.textContent = "Total: " + cartTotalPrice;
+    cartTotal.textContent = "Total: $" + cartTotalPrice.toFixed(2);
   } else {
     document.querySelector(".product-list").innerHTML =
       "<p>Your cart is empty.</p>";
