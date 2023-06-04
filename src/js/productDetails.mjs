@@ -33,6 +33,11 @@ function addToCart() {
         loadingText.textContent = "Added to Cart";
         const backpackIcon = document.querySelector(".cart");
         backpackIcon.style.animation = "backpackAnimation 0.5s";
+
+        // Update the cart count
+        const cartCountElement = document.querySelector(".item-count");
+        cartCountElement.textContent = updatedCart.length;
+
         setTimeout(() => {
             backpackIcon.style.animation = "";
             loadingOverlay.style.display = "none";

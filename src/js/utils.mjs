@@ -79,7 +79,21 @@ export function loadHeaderFooter() {
   // Grab the header and footer elements out of the DOM
   const headerElement = document.querySelector("header.divider");
   const footerElement = document.querySelector("footer");
+  headerTemplateFn().then(html => {
+    // cart data
+    const cartData = getLocalStorage("so-cart");
+    // obtained HTML content of the template
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    // element with class "item-count"
+    const itemCountElement = doc.querySelector(".item-count");
+    // Update the value of the element
+    itemCountElement.textContent = cartData.length;
+    // render the header
+    const modifiedHeaderTemplate = doc.documentElement.outerHTML;
+    renderWithTemplate(() => Promise.resolve(modifiedHeaderTemplate), headerElement);
+  });
   // Render the header and footer (renderWithTemplate)
-  renderWithTemplate(headerTemplateFn, headerElement);
+  // renderWithTemplate(headerTemplateFn, headerElement);
   renderWithTemplate(footerTemplateFn, footerElement);
 }
