@@ -1,4 +1,9 @@
-import { getLocalStorage } from "./utils.mjs";
+import {
+    setLocalStorage,
+    getLocalStorage,
+    alertMessage,
+    removeAllAlerts,
+} from "./utils.mjs";
 import { checkout } from "./externalServices.mjs";
 
 function formDataToJSON(formElement) {
@@ -37,8 +42,16 @@ const checkoutProcess = {
         this.key = key;
         this.outputSelector = outputSelector;
         this.list = getLocalStorage(key);
+        if (!this.list || this.list.length === 0) {
+            alertMessage("Your cart is empty")
+            const disableCheckoutbtn = document.getElementById("checkoutSubmit");
+            disableCheckoutbtn.disabled = true;
+            disableCheckoutbtn.title = "Your Cart is Empty"
+            return;
+        }
         this.calculateItemSummary();
         // this.calculateOrdertotal();
+
     },
     calculateItemSummary: function () {
         const summaryElement = document.querySelector(
@@ -54,14 +67,18 @@ const checkoutProcess = {
         summaryElement.innerText = "$" + this.itemTotal;
     },
     calculateOrdertotal: function () {
-        this.shipping = 10 + (this.list.length - 1) * 2;
-        this.tax = (this.itemTotal * 0.06).toFixed(2);
-        this.orderTotal = (
-            parseFloat(this.itemTotal) +
-            parseFloat(this.shipping) +
-            parseFloat(this.tax)
-        ).toFixed(2);
-        this.displayOrderTotals();
+        try {
+            this.shipping = 10 + (this.list.length - 1) * 2;
+            this.tax = (this.itemTotal * 0.06).toFixed(2);
+            this.orderTotal = (
+                parseFloat(this.itemTotal) +
+                parseFloat(this.shipping) +
+                parseFloat(this.tax)
+            ).toFixed(2);
+            this.displayOrderTotals();
+        } catch (error) {
+            alertMessage("Your cart is empty")
+        }
     },
     displayOrderTotals: function () {
         const shipping = document.querySelector(this.outputSelector + " #shipping");
@@ -84,8 +101,16 @@ const checkoutProcess = {
         console.log(json);
         try {
             const res = await checkout(json);
+            if (res) {
+                setLocalStorage("so-cart", []);
+                window.location.href = "success.html";
+            }
             console.log(res);
         } catch (err) {
+            removeAllAlerts();
+            for (let message in err.message) {
+                alertMessage(err.message[message]);
+            }
             console.log(err);
         }
     },

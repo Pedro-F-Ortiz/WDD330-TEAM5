@@ -1,5 +1,5 @@
 import { findProductById } from "./externalServices.mjs";
-import { setLocalStorage, getLocalStorage } from "./utils.mjs";
+import { setLocalStorage, getLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 
 let product = {};
 
@@ -21,28 +21,34 @@ export default async function productDetails(productId) {
 
 
 function addToCart() {
-    const loadingOverlay = document.querySelector(".loading-overlay");
-    const loadingText = loadingOverlay.querySelector(".loading-text");
-    loadingOverlay.style.display = "flex";
-
-
+    // disable the btn
+    const cartBtn = document.getElementById("addToCart");
+    cartBtn.disabled = true;
     setTimeout(() => {
         const cart = getLocalStorage("so-cart") || [];
         const updatedCart = [...cart, product];
         setLocalStorage("so-cart", updatedCart);
-        loadingText.textContent = "Added to Cart";
+
+
+
+
         const backpackIcon = document.querySelector(".cart");
         backpackIcon.style.animation = "backpackAnimation 0.5s";
 
         // Update the cart count
         const cartCountElement = document.querySelector(".item-count");
         cartCountElement.textContent = updatedCart.length;
+        document.querySelector(".item-count").classList.remove("hide");
 
         setTimeout(() => {
             backpackIcon.style.animation = "";
-            loadingOverlay.style.display = "none";
-        }, 500);
-    }, 1000);
+            removeAllAlerts();
+            alertMessage(product.Name + "was added to cart")
+            // enable the btn
+            cartBtn.disabled = false;
+        }, 1000);
+    }, 2000);
+
 }
 
 
