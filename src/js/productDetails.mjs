@@ -53,7 +53,18 @@ function renderProductDetails() {
         product.NameWithoutBrand;
     document.querySelector("#productImage").src = product.Images.PrimaryLarge;
     document.querySelector("#productImage").alt = product.Name;
-    document.querySelector("#productFinalPrice").innerText = product.FinalPrice;
+    document.querySelector("#productFinalPrice").innerText = "$" + product.FinalPrice;
+
+    // discount percentage
+    const productSuggestedRetailPrice = product.SuggestedRetailPrice;
+    const productFinalPrice = product.FinalPrice;
+    const productDiscount = (productSuggestedRetailPrice - productFinalPrice);
+    if (productDiscount > 0) {
+        const productDiscountPercent = ((productDiscount / productSuggestedRetailPrice) * 100).toFixed(0);
+        document.querySelector(".discount-indicator").innerText = productDiscountPercent + "% off";
+        document.querySelector(".discount-indicator").classList.remove("hide");
+    }
+
     document.querySelector("#productColorName").innerText =
         product.Colors[0].ColorName;
     document.querySelector("#productDescriptionHtmlSimple").innerHTML =

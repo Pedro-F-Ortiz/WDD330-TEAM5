@@ -129,6 +129,26 @@ button {
 
 /* end checkout styles */
 
+/* product page styles */
+
+.price-container {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.discount-indicator {
+  display: inline-block;
+  padding: 10px;
+  background-color: red;
+  color: white;
+  text-align: center;
+  line-height: 20px;
+  border-radius: 50%;
+}
+
+/* end product page styles */
+
 /* Cart icon styles */
 .cart {
   padding-top: 1em;
