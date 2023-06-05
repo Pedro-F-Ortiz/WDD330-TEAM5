@@ -37,8 +37,15 @@ const checkoutProcess = {
         this.key = key;
         this.outputSelector = outputSelector;
         this.list = getLocalStorage(key);
+        if (!this.list || this.list.length === 0) {
+            console.error("Error: The cart is empty.");
+            const disableCheckoutbtn = document.getElementById("checkoutSubmit");
+            disableCheckoutbtn.disabled = true;
+            return;
+        }
         this.calculateItemSummary();
         // this.calculateOrdertotal();
+
     },
     calculateItemSummary: function () {
         const summaryElement = document.querySelector(
