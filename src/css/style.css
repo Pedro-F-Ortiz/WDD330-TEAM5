@@ -172,7 +172,7 @@ button {
   fill: gray;
 }
 
-.hide {
+.hide.hide {
   display: none;
 }
 

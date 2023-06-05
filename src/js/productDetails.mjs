@@ -37,6 +37,7 @@ function addToCart() {
         // Update the cart count
         const cartCountElement = document.querySelector(".item-count");
         cartCountElement.textContent = updatedCart.length;
+        document.querySelector(".item-count").classList.remove("hide");
 
         setTimeout(() => {
             backpackIcon.style.animation = "";

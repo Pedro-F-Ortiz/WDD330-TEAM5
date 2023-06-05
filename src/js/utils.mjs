@@ -88,7 +88,13 @@ export function loadHeaderFooter() {
     // element with class "item-count"
     const itemCountElement = doc.querySelector(".item-count");
     // Update the value of the element
-    itemCountElement.textContent = cartData.length;
+    if (cartData) {
+      itemCountElement.textContent = cartData.length;
+      itemCountElement.classList.remove("hide");
+    }
+    else {
+      itemCountElement.textContent = 0;
+    }
     // render the header
     const modifiedHeaderTemplate = doc.documentElement.outerHTML;
     renderWithTemplate(() => Promise.resolve(modifiedHeaderTemplate), headerElement);

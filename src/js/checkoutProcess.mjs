@@ -84,6 +84,10 @@ const checkoutProcess = {
         console.log(json);
         try {
             const res = await checkout(json);
+            if (res) {
+                localStorage.clear();
+                window.location.href = "success.html";
+            }
             console.log(res);
         } catch (err) {
             console.log(err);
