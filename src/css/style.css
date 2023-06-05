@@ -127,6 +127,15 @@ button {
   font-size: 1em;
 }
 
+.checkoutBtn {
+  margin-bottom: 20px;
+}
+
+.checkoutBtn a {
+  text-decoration: none;
+  color: white;
+}
+
 /* end checkout styles */
 
 /* Cart icon styles */
