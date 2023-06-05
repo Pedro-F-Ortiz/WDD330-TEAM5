@@ -49,6 +49,7 @@ const checkoutProcess = {
             disableCheckoutbtn.title = "Your Cart is Empty"
             return;
         }
+        this.calculateItemSummary();
         // this.calculateOrdertotal();
 
     },
