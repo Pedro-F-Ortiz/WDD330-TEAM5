@@ -46,6 +46,7 @@ const checkoutProcess = {
             alertMessage("Your cart is empty")
             const disableCheckoutbtn = document.getElementById("checkoutSubmit");
             disableCheckoutbtn.disabled = true;
+            disableCheckoutbtn.title = "Your Cart is Empty"
             return;
         }
         // this.calculateOrdertotal();
@@ -75,7 +76,7 @@ const checkoutProcess = {
             ).toFixed(2);
             this.displayOrderTotals();
         } catch (error) {
-            console.error("Error: The cart is empty.");
+            alertMessage("Your cart is empty")
         }
     },
     displayOrderTotals: function () {
