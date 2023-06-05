@@ -1,4 +1,9 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import {
+    setLocalStorage,
+    getLocalStorage,
+    alertMessage,
+    removeAllAlerts,
+} from "./utils.mjs";
 import { checkout } from "./externalServices.mjs";
 
 function formDataToJSON(formElement) {
@@ -38,12 +43,11 @@ const checkoutProcess = {
         this.outputSelector = outputSelector;
         this.list = getLocalStorage(key);
         if (!this.list || this.list.length === 0) {
-            console.error("Error: The cart is empty.");
+            alertMessage("Your cart is empty")
             const disableCheckoutbtn = document.getElementById("checkoutSubmit");
             disableCheckoutbtn.disabled = true;
             return;
         }
-        this.calculateItemSummary();
         // this.calculateOrdertotal();
 
     },
@@ -61,14 +65,18 @@ const checkoutProcess = {
         summaryElement.innerText = "$" + this.itemTotal;
     },
     calculateOrdertotal: function () {
-        this.shipping = 10 + (this.list.length - 1) * 2;
-        this.tax = (this.itemTotal * 0.06).toFixed(2);
-        this.orderTotal = (
-            parseFloat(this.itemTotal) +
-            parseFloat(this.shipping) +
-            parseFloat(this.tax)
-        ).toFixed(2);
-        this.displayOrderTotals();
+        try {
+            this.shipping = 10 + (this.list.length - 1) * 2;
+            this.tax = (this.itemTotal * 0.06).toFixed(2);
+            this.orderTotal = (
+                parseFloat(this.itemTotal) +
+                parseFloat(this.shipping) +
+                parseFloat(this.tax)
+            ).toFixed(2);
+            this.displayOrderTotals();
+        } catch (error) {
+            console.error("Error: The cart is empty.");
+        }
     },
     displayOrderTotals: function () {
         const shipping = document.querySelector(this.outputSelector + " #shipping");
@@ -97,6 +105,10 @@ const checkoutProcess = {
             }
             console.log(res);
         } catch (err) {
+            removeAllAlerts();
+            for (let message in err.message) {
+                alertMessage(err.message[message]);
+            }
             console.log(err);
         }
     },

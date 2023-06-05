@@ -310,6 +310,19 @@ button {
   width: 100%;
 }
 
+/* alert styles */
+.alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5em;
+  background-color: var(--primary-color);
+  border: 1px solid darkorange;
+}
+.alert > p {
+  margin: 0;
+}
+
 /* Start cart list card styles */
 .cart-card {
   display: grid;
