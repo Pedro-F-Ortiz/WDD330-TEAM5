@@ -359,6 +359,11 @@ button {
   grid-column: 3;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  color: darkgray;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
