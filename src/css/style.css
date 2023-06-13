@@ -158,6 +158,27 @@ button {
 
 /* end product page styles */
 
+/* cart page styles */
+div.box {
+  display: flex;
+  justify-content: space-evenly;
+}
+div.box > * {
+  border: 1px solid black;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+}
+
+div.box > p {
+  border-right: none;
+}
+
+div.box > span {
+  cursor: pointer;
+}
+
 /* Cart icon styles */
 .cart {
   padding-top: 1em;

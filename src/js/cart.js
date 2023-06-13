@@ -45,7 +45,18 @@
 // renderCartContents();
 
 import { loadHeaderFooter } from "./utils.mjs";
-import renderCartContents from "./shoppingCart.mjs";
+import { renderCartContents, removeItem } from "./shoppingCart.mjs";
 
 loadHeaderFooter();
 renderCartContents();
+
+var cartItems = document.querySelectorAll(".cart-card span[data-id]");
+cartItems.forEach(function (span) {
+    span.addEventListener("click", function () {
+        var itemId = this.getAttribute("data-id");
+        console.log("Span clicked for item ID: " + itemId);
+        removeItem(itemId);
+        loadHeaderFooter();
+        renderCartContents();
+    });
+});
